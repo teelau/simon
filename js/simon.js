@@ -52,9 +52,26 @@ function NoteBox(key, onClick) {
 	// Call this NoteBox's clickHandler and play the note.
 	this.clickHandler = function () {
 		if (!enabled) return;
-
+		
 		this.onClick(this.key)
 		this.play()
+
+		if( this.key == queue[0] ) {
+			queue_remove();
+			//console.log(queue.length)
+			if(queue.length == 0){
+				setTimeout(level_add,2000);
+				console.log("next level!")
+			}
+		}
+		else{
+			//lose
+			array.length = 0;
+			console.log("game over")
+			setTimeout(level_add,3000);
+		}
+			
+
 	}.bind(this)
 
 	boxEl.addEventListener('mousedown', this.clickHandler);
@@ -71,6 +88,45 @@ KEYS.forEach(function (key) {
 	notes[key] = new NoteBox(key);
 });
 
-KEYS.concat(KEYS.slice().reverse()).forEach(function(key, i) {
-	setTimeout(notes[key].play.bind(null, key), i * NOTE_DURATION);
-});
+
+// KEYS.concat(KEYS.slice().reverse()).forEach(function(key, i) {
+// 	setTimeout(notes[key].play.bind(null, key), i * NOTE_DURATION);
+// });
+
+
+var array = [];//used to track level
+var queue = [];//track clicks
+var reset = false;
+
+//push a random key to the array
+function array_push() {
+	var random = KEYS[Math.floor(Math.random() * KEYS.length)];
+	array.push(random);
+	console.log("random key:", array[0])
+	//console.log(array[0])
+}
+
+//remove stuff from array
+function queue_remove() {
+	console.log("array:", array)
+	console.log("queue:", queue)
+	queue.shift();
+	console.log("array:", array)
+	console.log("queue:", queue)
+}
+
+//add to array and then reset queue
+function level_add()	{
+	//console.log("add a key")
+	//do {
+		array_push();
+		queue = array.slice();
+		console.log(queue)
+
+		queue.forEach(function(key,i) {
+			setTimeout(notes[key].play.bind(null, key), i * NOTE_DURATION);
+		});
+	//}while(reset);
+}
+
+level_add();
