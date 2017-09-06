@@ -56,16 +56,20 @@ function NoteBox(key, onClick) {
 		this.onClick(this.key)
 		this.play()
 
+		//check what key is pressed and then remove from front of the queue
 		if( this.key == queue[0] ) {
 			queue_remove();
 			//console.log(queue.length)
+			
+			//if the queue is emptied, then add to the next level and reset the queue
 			if(queue.length == 0){
 				setTimeout(level_add,2000);
 				console.log("next level!")
 			}
 		}
 		else{
-			//lose
+			//lose if key is not in the front of the queue
+			//reset the array/level to 0 and start over
 			array.length = 0;
 			console.log("game over")
 			setTimeout(level_add,3000);
@@ -108,6 +112,7 @@ function array_push() {
 
 //remove stuff from array
 function queue_remove() {
+	//remove from front of queue
 	console.log("array:", array)
 	console.log("queue:", queue)
 	queue.shift();
@@ -119,14 +124,18 @@ function queue_remove() {
 function level_add()	{
 	//console.log("add a key")
 	//do {
+
+		//append notes for current level and set the queue to be equal to array
 		array_push();
 		queue = array.slice();
 		console.log(queue)
 
+		//play notes of the current level
 		queue.forEach(function(key,i) {
 			setTimeout(notes[key].play.bind(null, key), i * NOTE_DURATION);
 		});
 	//}while(reset);
 }
 
+//initialize the game
 level_add();
