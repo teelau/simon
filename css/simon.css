@@ -21,6 +21,14 @@ html, body {
   cursor: pointer;
 }
 
+.game-box {
+  width: 50pt;
+  height: 50pt;
+  margin: 0 10pt;
+  border-width: 2pt;
+  cursor: pointer;
+}
+
 /* Per-note styles */
 #c {
     background-color: rgba(238, 0, 55, 0.4);
@@ -89,3 +97,20 @@ html, body {
 #f:hover {
   background-color: rgba(85, 229, 0, 0.6);
 }
+
+/* #start {
+  background-color: rgba(238, 0, 55, 0.4);
+  border: 3px solid rgba(238, 0, 55, 1);
+}
+
+#start.active {
+background-color: rgba(238, 0, 55, 1);
+}
+
+#start.active:hover {
+background-color: rgba(238, 0, 55, 1);
+}
+
+#start:hover {
+background-color: rgba(238, 0, 55, 0.6);
+} */
